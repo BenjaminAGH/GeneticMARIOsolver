@@ -151,9 +151,9 @@ function moveMario(matrix, position, move) {
     return applyGravity(matrix, newPosition);
 }
 
-
 function executeInstructions(matrix, instructions) {
-    const position = findMarioPosition(matrix);
+    const matrixCopy = JSON.parse(JSON.stringify(matrix));
+    const position = findMarioPosition(matrixCopy);
     const path = instructions.split('');
     let gameFinish = false;
     let fitness;
@@ -161,10 +161,10 @@ function executeInstructions(matrix, instructions) {
     try {
         for (const move of path) {
             console.log(`Mario's move: ${move}`);
-            Object.assign(position, moveMario(matrix, position, move));
-            printMatrix(matrix, position);
+            Object.assign(position, moveMario(matrixCopy, position, move));
+            printMatrix(matrixCopy, position);
 
-            if (position.x === matrix[0].length - 1) {
+            if (position.x === matrixCopy[0].length - 1) {
                 gameFinish = true;
                 break;
             }
@@ -173,7 +173,7 @@ function executeInstructions(matrix, instructions) {
         console.error(e.message);
     }
 
-    fitness = distanceToGoal(position, matrix);
+    fitness = distanceToGoal(position, matrixCopy);
     console.log("\n");
     console.log("Instructions: ", instructions);
     console.log(`Mario's final position: (${position.x}, ${position.y}). Distance to goal: ${fitness}`);
@@ -186,6 +186,7 @@ function executeInstructions(matrix, instructions) {
 
     return fitness;
 }
+
 
 
 export { 

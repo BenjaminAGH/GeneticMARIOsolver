@@ -44,9 +44,19 @@ function mutate(individual, mutationRate) {
 function geneticAlgorithm(matrix, populationSize, generations, mutationRate) {
     const length = matrix[0].length + matrix.length;
     let population = generateRandomPopulation(populationSize, length);
+    const generationDetails = []; 
 
     for (let generation = 0; generation < generations; generation++) {
         const fitnessPopulation = evaluateFitness(matrix, population);
+
+        generationDetails.push({
+            generation: generation + 1,
+            population: population.map(individual => ({
+                instructions: individual,
+                fitness: evaluateFitness(matrix, [individual])[0].fitness,
+            })),
+            bestFitness: fitnessPopulation[0].fitness,
+        });
 
         console.log(`Generation ${generation}, Best fitness: ${fitnessPopulation[0].fitness}`);
 
@@ -70,8 +80,9 @@ function geneticAlgorithm(matrix, populationSize, generations, mutationRate) {
     }
 
     const bestSolution = evaluateFitness(matrix, population).sort((a, b) => a.fitness - b.fitness)[0];
-    return bestSolution;
+    return { bestSolution, generationDetails };
 }
+
 
 
 export { 

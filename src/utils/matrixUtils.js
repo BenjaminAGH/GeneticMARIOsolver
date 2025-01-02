@@ -9,11 +9,19 @@ function readMatrix(filename) {
 }
 
 function printMatrix(matrix, position) {
-    const matrixCopy = matrix.map(row => [...row]);
-    matrixCopy[position.y][position.x] = 'M';
+    const matrixCopy = matrix.map(row => 
+        row.map(value => {
+            if (value === 0) return '◦';
+            if (value === 1) return '■';
+            if (value === 2) return '☹';
+            return value; 
+        })
+    );
+    matrixCopy[position.y][position.x] = 'M'; 
     console.log("--------------------");
     console.log(matrixCopy.map(row => row.join(' ')).join('\n'));
     console.log("--------------------");
 }
+
 
 export { readMatrix, printMatrix };
