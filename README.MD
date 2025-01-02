@@ -55,7 +55,3 @@ npm start -- <populationSize> <generations> <mutationRate>
 ```
 ---
 
-## 📖 Referencias
-
-- [John Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) - Información sobre las reglas y los patrones del juego.
----
